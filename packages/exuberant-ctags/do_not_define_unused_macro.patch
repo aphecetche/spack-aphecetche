@@ -1,0 +1,13 @@
+--- general.h	2020-05-28 09:33:25.000000000 -0700
++++ general_new.h	2020-05-28 09:27:16.000000000 -0700
+@@ -57,8 +57,8 @@
+  *  to prevent warnings about unused variables.
+  */
+ #if (__GNUC__ > 2  ||  (__GNUC__ == 2  &&  __GNUC_MINOR__ >= 7)) && !defined (__GNUG__)
+-# define __unused__  __attribute__((unused))
+-# define __printf__(s,f)  __attribute__((format (printf, s, f)))
++# define __unused__  
++# define __printf__(s,f)  
+ #else
+ # define __unused__
+ # define __printf__(s,f)
