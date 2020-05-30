@@ -55,7 +55,7 @@ class Ncdu(AutotoolsPackage):
     version('0.2',    sha256='4a18e0edec5694ffb3ef956dda50564b25ac6de1ca013bba400143121a8906b4')
     version('0.1',    sha256='fc38325312ce105c5290a80707539823d864377e5f8a99a1630baaea767eda46')
 
-    depends_on('ncurses')
+    depends_on('ncurses~termlib')
 
     def configure_args(self):
         # FIXME: Add arguments other than --prefix
