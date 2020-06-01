@@ -47,6 +47,8 @@ class Neovim(CMakePackage):
     depends_on('msgpack-c', when='@:0.4.0')
     depends_on('gperf', when='@:0.4.0')
 
+    patch('https://github.com/neovim/neovim/pull/11890.patch',sha256='c0315979e8e00535cf52eb9595da0ea51100e4e23739c460e32cb3d083d3bc7f')
+
     @run_before('cmake')
     def build_dependencies(self):
         if self.version < Version('0.4.0'):
