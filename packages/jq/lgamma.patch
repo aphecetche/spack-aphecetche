@@ -1,0 +1,12 @@
+diff --git a/src/builtin.c b/src/builtin.c
+index bf80c7b..15ae14e 100644
+--- a/src/builtin.c
++++ b/src/builtin.c
+@@ -192,6 +192,7 @@ static jv f_modf(jq_state *jq, jv input) {
+ }
+ #endif
+ #ifdef HAVE_LGAMMA_R
++double lgamma_r (double x, int *signp);
+ static jv f_lgamma_r(jq_state *jq, jv input) {
+   if (jv_get_kind(input) != JV_KIND_NUMBER) {
+     return type_error(input, "number required");
