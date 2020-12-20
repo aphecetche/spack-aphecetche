@@ -1,0 +1,7 @@
+config:
+  install_tree:
+    root: ~/opt/spack
+  module_roots:
+    tcl: ~/opt/spack/share/spack/modules
+    lmod: ~/opt/spack/share/spack/lmod
+  source_cache: ~/opt/spack/var/spack/cache
