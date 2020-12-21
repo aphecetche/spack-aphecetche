@@ -60,5 +60,6 @@ class Ncdu(AutotoolsPackage):
     depends_on('ncurses')
     patch('libtinfo.patch')
 
-
-
+    def configure_args(self):
+      args = ["--with-ncurses"]
+      return args
