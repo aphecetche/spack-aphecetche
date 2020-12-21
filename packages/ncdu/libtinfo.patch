@@ -1,0 +1,70 @@
+--- a/configure	2020-06-10 12:25:23.000000000 +0200
++++ b/configure	2020-12-21 16:27:20.000000000 +0100
+@@ -5344,6 +5344,67 @@
+ fi
+ fi
+ 
++{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing acs_map" >&5
++$as_echo_n "checking for library containing acs_map... " >&6; }
++if ${ac_cv_search_acs_map+:} false; then :
++  $as_echo_n "(cached) " >&6
++else
++  ac_func_search_save_LIBS=$LIBS
++cat confdefs.h - <<_ACEOF >conftest.$ac_ext
++/* end confdefs.h.  */
++
++/* Override any GCC internal prototype to avoid an error.
++   Use char because int might match the return type of a GCC
++   builtin and then its argument prototype would still apply.  */
++#ifdef __cplusplus
++extern "C"
++#endif
++char acs_map ();
++int
++main ()
++{
++return acs_map ();
++  ;
++  return 0;
++}
++_ACEOF
++for ac_lib in '' ncurses ncursesw tinfo; do
++  if test -z "$ac_lib"; then
++    ac_res="none required"
++  else
++    ac_res=-l$ac_lib
++    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
++  fi
++  if ac_fn_c_try_link "$LINENO"; then :
++  ac_cv_search_acs_map=$ac_res
++fi
++rm -f core conftest.err conftest.$ac_objext \
++    conftest$ac_exeext
++  if ${ac_cv_search_acs_map+:} false; then :
++  break
++fi
++done
++if ${ac_cv_search_acs_map+:} false; then :
++
++else
++  ac_cv_search_acs_map=no
++fi
++rm conftest.$ac_ext
++LIBS=$ac_func_search_save_LIBS
++fi
++{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_acs_map" >&5
++$as_echo "$ac_cv_search_acs_map" >&6; }
++ac_res=$ac_cv_search_acs_map
++if test "$ac_res" != no; then :
++  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
++
++else
++
++        as_fn_error $? "unable to find the acs_map function" "$LINENO" 5
++
++fi
++
++
+ # Configure default shell for spawning shell when $SHELL is not set
+ 
+ # Check whether --with-shell was given.

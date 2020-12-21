@@ -34,6 +34,8 @@ class Ncdu(AutotoolsPackage):
     homepage = "http://dev.yorhel.nl/ncdu"
     url      = "http://dev.yorhel.nl/download/ncdu-1.14.2.tar.gz"
 
+    version('1.15.1', sha256='b02ddc4dbf1db139cc6fbbe2f54a282770380f0ca5c17089855eab52a9ea3fb0')
+    version('1.15',   sha256='4a593dc5cceb2492a9669f5f5d69d0e517de457a11036788ea4591f33c5297fb')
     version('1.14.2', sha256='947a7f5c1d0cd4e338e72b4f5bc5e2873651442cec3cb012e04ad2c37152c6b1')
     version('1.14.1', sha256='be31e0e8c13a0189f2a186936f7e298c6390ebdc573bb4a1330bc1fcbf56e13e')
     version('1.14',   sha256='c694783aab21e27e64baad314b7c1ff34541bfa219fe9645ef6780f1c5558c44')
@@ -55,10 +57,8 @@ class Ncdu(AutotoolsPackage):
     version('0.2',    sha256='4a18e0edec5694ffb3ef956dda50564b25ac6de1ca013bba400143121a8906b4')
     version('0.1',    sha256='fc38325312ce105c5290a80707539823d864377e5f8a99a1630baaea767eda46')
 
-    depends_on('ncurses~termlib')
+    depends_on('ncurses')
+    patch('libtinfo.patch')
 
-    def configure_args(self):
-        # FIXME: Add arguments other than --prefix
-        # FIXME: If not needed delete this function
-        args = []
-        return args
+
+
