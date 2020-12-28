@@ -44,4 +44,4 @@ class PhpCsFixer(Package):
 
     def install(self, spec, prefix):
         set_executable(self.stage.archive_file)
-        copy(sef.stage.archive_file,prefix)
+        copy(self.stage.archive_file,prefix)

@@ -1,0 +1,6 @@
+packages:
+  xrootd:
+    variants: ~readline +python
+  all:
+    providers:
+      gl: [mesa]
