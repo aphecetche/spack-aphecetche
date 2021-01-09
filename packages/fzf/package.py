@@ -56,3 +56,5 @@ class Fzf(MakefilePackage):
         if '+vim' in spec:
             mkdir(prefix.plugin)
             install('plugin/fzf.vim', prefix.plugin)
+
+        install_tree('shell',prefix.shell)
