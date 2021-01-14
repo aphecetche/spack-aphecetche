@@ -1,9 +1,7 @@
-# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
-
-from spack import *
 from six import iteritems
 
 
@@ -55,11 +53,16 @@ class Rust(Package):
         default=True,
         description='Install Rust source files'
     )
+    variant(
+        'extra_targets', default='none', multi=True,
+        description='Triples for extra targets to enable. For supported targets, see: https://doc.rust-lang.org/nightly/rustc/platform-support.html'
+    )
 
-    depends_on('python@:2.7', type='build')
-    #depends_on('python@2.7:2.8', when='@:1.43', type='build')
+    depends_on('python@3.9.1:',when='@1.49.0:',type='build')
+    depends_on('python@2.7:2.8', when='@:1.43', type='build')
     depends_on('gmake@3.81:', type='build')
     depends_on('cmake@3.4.3:', type='build')
+    depends_on('ninja', when='@1.48.0:', type='build')
     depends_on('pkgconfig', type='build')
     depends_on('openssl')
     depends_on('libssh2')
@@ -85,6 +88,13 @@ class Rust(Package):
     # The `x.py` bootstrapping script did not exist prior to Rust 1.17. It
     # would be possible to support both, but for simplicitly, we only support
     # Rust 1.17 and newer
+    version('1.49.0', sha256='b50aefa8df1fdfc9bccafdbf37aee611c8dfe81bf5648d5f43699c50289dc779')
+    version('1.48.0', sha256='0e763e6db47d5d6f91583284d2f989eacc49b84794d1443355b85c58d67ae43b')
+    version('1.47.0', sha256='3185df064c4747f2c8b9bb8c4468edd58ff4ad6d07880c879ac1b173b768d81d')
+    version('1.46.0', sha256='2d6a3b7196db474ba3f37b8f5d50a1ecedff00738d7846840605b42bfc922728')
+    version('1.45.1', sha256='ea53e6424e3d1fe56c6d77a00e72c5d594b509ec920c5a779a7b8e1dbd74219b')
+    version('1.44.1', sha256='7e2e64cb298dd5d5aea52eafe943ba0458fa82f2987fdcda1ff6f537b6f88473')
+    version('1.44.0', sha256='bf2df62317e533e84167c5bc7d4351a99fdab1f9cd6e6ba09f51996ad8561100')
     version('1.43.1', sha256='cde177b4a8c687da96f20de27630a1eb55c9d146a15e4c900d5c31cd3c3ac41d')
     version('1.43.0', sha256='75f6ac6c9da9f897f4634d5a07be4084692f7ccc2d2bb89337be86cfc18453a1')
     version('1.42.0', sha256='d2e8f931d16a0539faaaacd801e0d92c58df190269014b2360c6ab2a90ee3475')
@@ -126,6 +136,49 @@ class Rust(Package):
     # This dictionary contains a version: hash dictionary for each supported
     # Rust target.
     rust_releases = {
+        '1.49.0': {
+            'x86_64-unknown-linux-gnu':      '',
+            'powerpc64le-unknown-linux-gnu': '',
+            'aarch64-unknown-linux-gnu':     '',
+            'x86_64-apple-darwin':           'fe3e248bc4b0ee0a2595693687ad845c8a8bda824a56c9321520bcca02433716',
+            'aarch64-apple-darwin':          'ce7d689e6f73dd9c07b672ba23dabe5159fa8c194dce71b4f3f95baeaf564082'
+        },
+        '1.48.0': {
+            'x86_64-unknown-linux-gnu':      '950420a35b2dd9091f1b93a9ccd5abc026ca7112e667f246b1deb79204e2038b',
+            'powerpc64le-unknown-linux-gnu': 'e6457a0214f3b1b04bd5b2618bba7e3826e254216420dede2971b571a1c13bb1',
+            'aarch64-unknown-linux-gnu':     'c4769418d8d89f432e4a3a21ad60f99629e4b13bbfc29aef7d9d51c4e8ee8a8a',
+            'x86_64-apple-darwin':           'f30ce0162b39dc7cf877020cec64d4826cad50467af493d180b5b28cf5eb50b3'
+        },
+        '1.47.0': {
+            'x86_64-unknown-linux-gnu':      'd0e11e1756a072e8e246b05d54593402813d047d12e44df281fbabda91035d96',
+            'powerpc64le-unknown-linux-gnu': '5760c3b1897ea70791320c2565f3eef700a3d54059027b84bbe6b8d6157f81c8',
+            'aarch64-unknown-linux-gnu':     '753c905e89a714ab9bce6fe1397b721f29c0760c32f09d2f328af3d39919c8e6',
+            'x86_64-apple-darwin':           '84e5be6c5c78734deba911dcf80316be1e4c7da2c59413124d039ad96620612f'
+        },
+        '1.46.0': {
+            'x86_64-unknown-linux-gnu':      'e3b98bc3440fe92817881933f9564389eccb396f5f431f33d48b979fa2fbdcf5',
+            'powerpc64le-unknown-linux-gnu': '89e2f4761d257f017a4b6aa427f36ac0603195546fa2cfded8c899789832941c',
+            'aarch64-unknown-linux-gnu':     'f0c6d630f3dedb3db69d69ed9f833aa6b472363096f5164f1068c7001ca42aeb',
+            'x86_64-apple-darwin':           '82d61582a3772932432a99789c3b3bd4abe6baca339e355048ca9efb9ea5b4db'
+        },
+        '1.45.1': {
+            'x86_64-unknown-linux-gnu':      '76dc9f05b3bfd0465d6e6d22bc9fd5db0b473e3548e8b3d266ecfe4d9e5dca16',
+            'powerpc64le-unknown-linux-gnu': '271846e4f5adc9a33754794c2ffab851f9e0313c8c1315264e7db5c8f63ab7ab',
+            'aarch64-unknown-linux-gnu':     'd17fd560e8d5d12304835b71a7e22ac2c3babf4b9768db6a0e89868b4444f728',
+            'x86_64-apple-darwin':           '7334c927e4d2d12d209bf941b97ba309e548413e241d2d263c39c6e12b3ce154'
+        },
+        '1.44.1': {
+            'x86_64-unknown-linux-gnu':      'a41df89a461a580536aeb42755e43037556fba2e527dd13a1e1bb0749de28202',
+            'powerpc64le-unknown-linux-gnu': '22deeca259459db31065af7c862fcab7fbfb623200520c65002ed2ba93d87ad2',
+            'aarch64-unknown-linux-gnu':     'a2d74ebeec0b6778026b6c37814cdc91d14db3b0d8b6d69d036216f4d9cf7e49',
+            'x86_64-apple-darwin':           'a5464e7bcbce9647607904a4afa8362382f1fc55d39e7bbaf4483ac00eb5d56a'
+        },
+        '1.44.0': {
+            'x86_64-unknown-linux-gnu':      'eaa34271b4ac4d2c281831117d4d335eed0b37fe7a34477d9855a6f1d930a624',
+            'powerpc64le-unknown-linux-gnu': '97038ea935c7a5b21f5aaaaad409c514e2b2ae8ea55994ba39645f453e98bc9f',
+            'aarch64-unknown-linux-gnu':     'bcc916003cb9c7ff44f5f9af348020b422dbc5bd4fe49bdbda2de6ce0a1bb745',
+            'x86_64-apple-darwin':           'f20388b80b2b0a8b122d89058f785a2cf3b14e93bcac53471d60fdb4106ffa35'
+        },
         '1.43.1': {
             'x86_64-unknown-linux-gnu':      '25cd71b95bba0daef56bad8c943a87368c4185b90983f4412f46e3e2418c0505',
             'powerpc64le-unknown-linux-gnu': '1670f00b00cc1bed38d523a25dba7420de3c06986c15a0248e06299f80ce6124',
@@ -343,6 +396,9 @@ class Rust(Package):
         ],
         'x86_64-apple-darwin': [
             {'platform': 'darwin', 'target': 'x86_64:'}
+        ],
+        'aarch64-apple-darwin': [
+            {'platform': 'darwin', 'target': 'arm64:'}
         ]
     }
 
@@ -370,11 +426,11 @@ class Rust(Package):
                     sha256='0000000000000000000000000000000000000000000000000000000000000000',
                     destination='spack_bootstrap_stage',
                     when='@{version} platform={platform} target={target}'\
-                        .format(
-                            version=prerelease_version,
-                            platform=rust_arch['platform'],
-                            target=rust_arch['target']
-                        )
+                    .format(
+                        version=prerelease_version,
+                        platform=rust_arch['platform'],
+                        target=rust_arch['target']
+                    )
                 )
 
     # This loop generates resources for each binary distribution, and maps
@@ -400,12 +456,11 @@ class Rust(Package):
                     ),
                     sha256=rust_sha256,
                     destination='spack_bootstrap_stage',
-                    when='@{version} platform={platform} target={target}'\
-                        .format(
-                            version=rust_version,
-                            platform=rust_arch['platform'],
-                            target=rust_arch['target']
-                        )
+                    when='@{ver} platform={platform} target={target}'.format(
+                        ver=rust_version,
+                        platform=rust_arch['platform'],
+                        target=rust_arch['target']
+                    )
                 )
 
     # This routine returns the target architecture we intend to build for.
@@ -417,8 +472,11 @@ class Rust(Package):
                 return 'powerpc64le-unknown-linux-gnu'
             elif 'target=aarch64:' in self.spec:
                 return 'aarch64-unknown-linux-gnu'
-        elif 'platform=darwin target=x86_64:' in self.spec:
-            return 'x86_64-apple-darwin'
+        elif 'platform=darwin':
+            if 'target=x86_64:' in self.spec:
+              return 'x86_64-apple-darwin'
+            if 'target=arm64:' in self.spec:
+              return 'aarch64-apple-darwin'
 
         raise InstallError(
             "rust is not supported for '{0}'".format(
@@ -475,6 +533,26 @@ class Rust(Package):
 
         ar = which('ar', required=True)
 
+        extra_targets = []
+        if not self.spec.satisfies('extra_targets=none'):
+            extra_targets = list(self.spec.variants['extra_targets'].value)
+
+        targets = [self.get_rust_target()] + extra_targets
+        target_spec = 'target=[' + \
+            ','.join('"{0}"'.format(target) for target in targets) + ']'
+        target_specs = '\n'.join(
+            '[target.{0}]\nar = "{1}"\n'.format(target, ar.path)
+            for target in targets)
+
+        build_target = self.get_rust_target()
+
+        # 1.49.0 is the first version with (Tier2) support Apple M1, 
+        # so there's no binary to be used to bootstrap.
+        # We thus use the Intel version for the moment...
+        if 'aarch64-apple-darwin' in build_target and self.spec.satisfies('@1.49.0'):
+            build_target = 'x86_64-apple-darwin'
+
+        build_spec = 'build="' + build_target + '"'
         # build.tools was introduced in Rust 1.25
         tools_spec = \
             'tools={0}'.format(tools) if self.check_newer('1.25') else ''
@@ -508,16 +586,17 @@ docs = false
 vendor = true
 extended = true
 verbose = 2
+{target_spec}
 {tools_spec}
 {rustfmt_spec}
+{build_spec}
 
 [rust]
 channel = "stable"
 rpath = true
 {deny_warnings_spec}
 
-[target.{target}]
-ar = "{ar}"
+{target_specs}
 
 [install]
 prefix = "{prefix}"
@@ -526,11 +605,12 @@ sysconfdir = "etc"
                 cargo=join_path(boot_bin, 'cargo'),
                 rustc=join_path(boot_bin, 'rustc'),
                 prefix=prefix,
-                target=target,
                 deny_warnings_spec=deny_warnings_spec,
-                ar=ar.path,
+                target_spec=target_spec,
+                target_specs=target_specs,
                 tools_spec=tools_spec,
-                rustfmt_spec=rustfmt_spec
+                rustfmt_spec=rustfmt_spec,
+                build_spec=build_spec
             )
             )
 
