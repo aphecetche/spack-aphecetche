@@ -18,13 +18,14 @@ class NodeJs(Package):
     list_depth = 1
 
     # Current (latest features)
-    version('14.15.3', sha256='d23a5c354f1c30278477e4e8d1ecb4c12660a4d1ba2476feeed9434e6bf5b96e',preferred=True)
-    version('14.13.0', sha256='8538b2e76aa06ee0e6eb1c118426c3c5ca53b2e49d66591738eacf76e89edd61')
-    version('14.10.0', sha256='7e0d7a1aa23697415e3588a1ca4f1c47496e6c88b9cf37c66be90353d3e4ac3e')
     version('13.8.0',  sha256='815b5e1b18114f35da89e4d98febeaba97555d51ef593bd5175db2b05f2e8be6')
     version('13.5.0',  sha256='4b8078d896a7550d7ed399c1b4ac9043e9f883be404d9b337185c8d8479f2db8')
 
     # LTS (recommended for most users)
+    version('14.15.4', sha256='8610d81b2d4afc3a79afbe6209d510125131c45cae22cac63bb767dcfec1cbf0',preferred=True)
+    version('14.15.3', sha256='d23a5c354f1c30278477e4e8d1ecb4c12660a4d1ba2476feeed9434e6bf5b96e')
+    version('14.13.0', sha256='8538b2e76aa06ee0e6eb1c118426c3c5ca53b2e49d66591738eacf76e89edd61')
+    version('14.10.0', sha256='7e0d7a1aa23697415e3588a1ca4f1c47496e6c88b9cf37c66be90353d3e4ac3e')
     version('12.18.4', sha256='a802d87e579e46fc52771ed6f2667048320caca867be3276f4c4f1bbb41389c3')
     version('12.18.3', sha256='6ea85f80e01b007cc9b566b8836513bc5102667d833bad4c1092be60fa60c2d4')
     version('12.16.0', sha256='ae2dfe74485d821d4fef7cf1802acd2322cd994c853a2327c4306952f4453441')
