@@ -36,7 +36,6 @@ class GoBootstrap(Package):
     for ver, packages in _versions.items():
         key = "{0}-{1}".format(platform.system(),platform.machine())
         remote = _local2remote.get(key)
-        #print("ver={2} key={0} remote={1}".format(key,remote,ver))
         pkg = packages.get(remote)
         if pkg:
             version(ver,sha256=pkg,url='https://golang.org/dl/go{0}.{1}.tar.gz'.format(ver,remote))
@@ -59,7 +58,6 @@ class GoBootstrap(Package):
  
     conflicts('@1.16beta1', when='platform=linux',msg='1.16beta1 is solely for macOS')
     conflicts('@1.16beta1', when='platform=cray',msg='1.16beta1 is solely for macOS')
-    print(platform.system(),platform.machine())
     if platform.system() == 'darwin':
         conflicts('@1.16beta4',when='target=arm64')
 
