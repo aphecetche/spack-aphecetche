@@ -16,6 +16,7 @@ class Fzf(MakefilePackage):
     homepage = "https://github.com/junegunn/fzf"
     url      = "https://github.com/junegunn/fzf/archive/0.17.5.tar.gz"
 
+    version('0.25.0',   sha256='ccbe13733d692dbc4f0e4c0d40c053cba8d22f309955803692569fb129e42eb0')
     version('0.21.1',   sha256='47adf138f17c45d390af81958bdff6f92157d41e2c4cb13773df078b905cdaf4')
     version('0.21.0-1', sha256='f647ff8c8828a38f5fa10c9f831a5e5e58321bba1e26abdb249f1af48ffd97db')
     version('0.21.0',   sha256='89870f9f9396f41adc3609d466caab7556d831a1ad726cc6132a880febfd0eec')
@@ -34,6 +35,7 @@ class Fzf(MakefilePackage):
     version('0.16.8',   sha256='daef99f67cff3dad261dbcf2aef995bb78b360bcc7098d7230cb11674e1ee1d4')
 
     depends_on('go@1.11:')
+    conflicts('@:0.24.0',when='platform=darwin target=arm64:')
 
     variant('vim', default=False, description='Install vim plugins for fzf')
 
@@ -44,6 +46,8 @@ class Fzf(MakefilePackage):
         os.environ['GLIDE_HOME'] = glide_home
         shutil.rmtree(glide_home, ignore_errors=True)
         os.mkdir(glide_home)
+        os.environ['FZF_VERSION'] = '{0}'.format(self.spec.version)
+        os.environ['FZF_REVISION'] = "tarball"
         super(Fzf, self).build(spec, prefix)
 
     def install(self, spec, prefix):
