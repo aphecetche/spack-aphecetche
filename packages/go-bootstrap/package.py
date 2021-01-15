@@ -20,7 +20,8 @@ _versions = {
 }
 
 _local2remote = {
-    'Darwin-x86_64':'darwin-amd64'
+    'Darwin-x86_64':'darwin-amd64',
+    'Darwin-arm64':'darwin-arm64'
 }
 
 class GoBootstrap(Package):
