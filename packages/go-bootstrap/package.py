@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack import *
+import platform
 
 # THIS PACKAGE SHOULD NOT EXIST
 # it exists to make up for the inability to:
@@ -11,6 +12,16 @@ from spack import *
 # * have go depend on itself
 # * have a sensible way to find gccgo without a dep on gcc
 
+_versions = {
+    '1.16beta1': {
+        'darwin-arm64': 'fd57f47987bb330fd9b438e7b4c8941b63c3807366602d99c1d99e0122ec62f1',
+        'darwin-amd64': 'c3518be5a17c7df746e2596e2ea310cd56348e05454f2bfbb25c5e84708dc2e2'
+    }
+}
+
+_local2remote = {
+    'Darwin-x86_64':'darwin-amd64'
+}
 
 class GoBootstrap(Package):
     """Old C-bootstrapped go to bootstrap real go"""
@@ -19,13 +30,23 @@ class GoBootstrap(Package):
 
     extendable = True
 
+    # For some (recent) platforms, we can't actually build a go bootstrap 
+    # with a c-compiler, we need a go one.
+
+    for ver, packages in _versions.items():
+        key = "{0}-{1}".format(platform.system(),platform.machine())
+        remote = _local2remote.get(key)
+        #print("ver={2} key={0} remote={1}".format(key,remote,ver))
+        pkg = packages.get(remote)
+        if pkg:
+            version(ver,sha256=pkg,url='https://golang.org/dl/go{0}.{1}.tar.gz'.format(ver,remote))
+
     # NOTE: Go@1.4.x is the only supported bootstrapping compiler because all
     # later versions require a Go compiler to build.
     # See: https://golang.org/doc/install/source#go14 and
     # https://github.com/golang/go/issues/17545 and
     # https://github.com/golang/go/issues/16352
-    version('1.16beta1',sha256='fd57f47987bb330fd9b438e7b4c8941b63c3807366602d99c1d99e0122ec62f1',
-            url='https://golang.org/dl/go1.16beta1.darwin-arm64.tar.gz')
+
     version('1.4-bootstrap-20171003', sha256='f4ff5b5eb3a3cae1c993723f3eab519c5bae18866b5e5f96fe1102f0cb5c3e52',
             url='https://dl.google.com/go/go1.4-bootstrap-20171003.tar.gz')
     version('1.4-bootstrap-20170531', sha256='49f806f66762077861b7de7081f586995940772d29d4c45068c134441a743fa2',
@@ -38,6 +59,9 @@ class GoBootstrap(Package):
  
     conflicts('@1.16beta1', when='platform=linux',msg='1.16beta1 is solely for macOS')
     conflicts('@1.16beta1', when='platform=cray',msg='1.16beta1 is solely for macOS')
+    print(platform.system(),platform.machine())
+    if platform.system() == 'darwin':
+        conflicts('@1.16beta4',when='target=arm64')
 
     depends_on('git', type=('build', 'link', 'run'), when='@:1.4')
 
