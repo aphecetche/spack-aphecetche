@@ -15,6 +15,7 @@ class Npm(Package):
     url      = "https://registry.npmjs.org/npm/-/npm-6.13.4.tgz"
 
     version('7.4.0', sha256='c2c967a48ef560014c19f4d041f3d9d610289ae873582e88308808e3e35cccce')
+    version('6.14.11', sha256='13ed5653ba2ac2b7bb65852ea2e8b2e247738850f6c07c69c22394cb22db56e0')
     version('6.14.9', sha256='1e0e880ce0d5adf0120fb3f92fc8e5ea5bac73681d37282615d074ff670f7703')
     version('6.14.8', sha256='fe8e873cb606c06f67f666b4725eb9122c8927f677c8c0baf1477f0ff81f5a2c')
     version('6.13.7', sha256='6adf71c198d61a5790cf0e057f4ab72c6ef6c345d72bed8bb7212cb9db969494')
