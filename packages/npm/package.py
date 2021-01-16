@@ -7,8 +7,6 @@ import os
 import shutil
 from spack import *
 
-
-# NOTE: not actually an Autotools package
 class Npm(Package):
     """npm: A package manager for javascript."""
 
@@ -38,7 +36,7 @@ class Npm(Package):
              sha256='168b394fbca60ea81dc84b1824466df96246b9eb4d671c2541f55f408a264b4c',
              when='@:7.3.0')
 
-    phases = ['configure', 'build', 'install']
+    phases = ['install']
 
     @when('@:7.3.0')
     def patch(self):
@@ -48,14 +46,10 @@ class Npm(Package):
                     'package.json')
         install_tree('env-paths/package', 'node_modules/env-paths')
 
-    def configure(self, spec, prefix):
-        configure('--prefix={0}'.format(prefix))
-
-    def build(self, spec, prefix):
-        make()
-
     def install(self, spec, prefix):
-        make('install')
+        node = which('node')
+        mkdir(prefix.lib)
+        node('bin/npm-cli.js','install','--global','-ddd','--prefix={0}'.format(prefix),self.stage.archive_file)
 
     def setup_dependent_build_environment(self, env, dependent_spec):
         npm_config_cache_dir = "%s/npm-cache" % dependent_spec.prefix
