@@ -151,7 +151,8 @@ class PyTensorflow(Package, CudaPackage):
     depends_on('py-keras-preprocessing@1.0.5:', type=('build', 'run'), when='@1.12:')
     depends_on('py-keras-preprocessing@1.0.3:', type=('build', 'run'), when='@1.11:')
     # https://github.com/tensorflow/tensorflow/issues/40688
-    depends_on('py-numpy@1.16.0:1.18',  type=('build', 'run'), when='@1.13.2,1.15:')
+    depends_on('py-numpy@1.19.2:1.19.99',  type=('build', 'run'), when='@2.4:')
+    depends_on('py-numpy@1.16.0:1.18',  type=('build', 'run'), when='@1.13.2,1.15:2.3')
     depends_on('py-numpy@1.14.5:1.18',  type=('build', 'run'), when='@1.12.1,1.14.0')
     depends_on('py-numpy@1.13.3:1.14.5', type=('build', 'run'), when='@1.10.0:1.10.1')
     depends_on('py-numpy@1.13.3:',       type=('build', 'run'), when='@1.6:')
@@ -191,6 +192,8 @@ class PyTensorflow(Package, CudaPackage):
         # Only builds correctly on little-endian machines
         depends_on('py-grpcio@1.8.6:', type=('build', 'run'), when='@1.8:')
         depends_on('py-grpcio@1.34.0:', type=('build', 'run'), when='@2.3:')
+
+    depends_on('flatbuffers+python',type=('build','run'), when='@2.4:')
 
     # TODO: add packages for some of these dependencies
     depends_on('mkl', when='+mkl')
