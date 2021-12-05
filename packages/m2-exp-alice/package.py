@@ -5,7 +5,7 @@
 
 
 from spack import *
-
+import os
 
 class M2ExpAlice(CMakePackage):
     """FIXME: Put a proper description of your package here."""
@@ -31,6 +31,7 @@ class M2ExpAlice(CMakePackage):
     depends_on('rapidjson')
     depends_on('ninja',type='build')
     depends_on('jalien-root',when='+aliroot')
+    depends_on('vmc',when='+aliphysics')
 
     def cmake_args(self):
         args = []
@@ -38,3 +39,8 @@ class M2ExpAlice(CMakePackage):
         args.append(self.define_from_variant("BUILD_ALIPHYSICS","aliphysics"))
         args.append(self.define("CMAKE_EXPORT_COMPILE_COMMANDS",True))
         return args
+
+    def setup_run_environment(self,env):
+        env.set('ALICE_ROOT',self.prefix)
+        env.set('ALICE_PHYSICS',self.prefix)
+        env.append_path('ROOT_INCLUDE_PATH',os.path.join(self.prefix,'include'))
